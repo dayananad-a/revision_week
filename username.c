@@ -1,33 +1,40 @@
 #include <stdio.h>
 #include <stdlib.h>
-void main()
+#include <string.h>
+
+int main()
 {
     char str[100];
-    int i, flg=0;
+    int i, flg=1;
     printf("Rules to be followed:\n*no caps allowed.\n*_ and . are allowed.\n*digits are allowed.\n\n" );
     printf("Please enter the string: ");
-    gets(str);
+    fgets(str, sizeof(str), stdin);
+    str[strcspn(str, "\n")] = '\0';
+    
+    if (strlen(str) == 0) 
+	{
+        printf("The given username is not valid");
+        return 0;
+    }
+
     for(i=0; str[i] != '\0'; i++)
 	{
         if(str[i]>='a' && str[i]<='z') 
 		{ 
-          flg=1;
-    	}    	
+            continue;
+    	}
     	else if(str[i]>='0' && str[i]<='9')
 		{
-        	flg=1;
+        	continue;
     	}
-    	else if( str[i]=='_'||str[i]=='.' )
+    	else if(str[i]=='_' || str[i]=='.')
     	{
-    		flg=1;
-		}
-		else if( str[i]>='A' && str[i]<='Z' )
-    	{
-    		flg=0;
+    		continue;
 		}
     	else
     	{
     		flg=0;
+            break;
 		}
     }
     
@@ -39,4 +46,5 @@ void main()
 	{
 		printf("The given username is not valid");
 	}
+    return 0;
 }
